@@ -36,18 +36,24 @@ module.exports.controller = function(app) {
     })
     //get admin by id
     .post(function(req, res) {
-        var email = req.body['email'];
-        var password = req.body['password'];
-        Admin.findAdminByCredentials(email,password)
-        .then(function(admin) {
-            res.json(admin);
-        })
-        .catch(function(err) {
-            console.log(err);
-            res.status(500).json(err);
-        });
+        if(req.authenticated){
+            var email = req.body['email'];
+            var password = req.body['password'];
+            Admin.findAdminByCredentials(email,password)
+            .then(function(admin) {
+                res.json(admin);
+            })
+            .catch(function(err) {
+                console.log(err);
+                res.status(500).json(err);
+            });
+        }
+        else{
+            res.status(401).json({message: 'You are not authorized to access this resource.'});
+        }
+        
     });
-    
+
     //route for updating the admin with id passed in the url
     app.route('/admin/:id')
     .all(function(req, res, next) {
@@ -55,14 +61,19 @@ module.exports.controller = function(app) {
     })
     //get admin by id
     .get(function(req, res) {
-        Admin.findAdminById(req.params.id)
-        .then(function(admin) {
-            res.json(admin);
-        })
-        .catch(function(err) {
-            console.log(err);
-            res.status(500).json(err);
-        });
+        if(req.authenticated && req.role=="admin"){
+            Admin.findAdminById(req.params.id)
+            .then(function(admin) {
+                res.json(admin);
+            })
+            .catch(function(err) {
+                console.log(err);
+                res.status(500).json(err);
+            });
+        }
+        else{
+            res.status(401).json({message: 'You are not authorized to access this resource.'});
+        }
     })
     //update admin by id
     .put(function(req, res) {
