@@ -1,5 +1,6 @@
 var Q = require('q');
 var Admin = require('../models/admin');
+var jwt = require('../lib/jwt');
 
 module.exports = {
     //find all admin in the collection
@@ -50,7 +51,7 @@ module.exports = {
   
           return deferred.promise;
       },
-      
+
     //create admin with username and text
     createAdmin: function(body) {
       var deferred = Q.defer();
