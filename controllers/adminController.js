@@ -20,7 +20,7 @@ module.exports.controller = function(app) {
     })
     //post method of the route used to create all admin
     .post(function(req, res) {
-        if(req.authenticated && req.role=="admin"){
+        if(req.authenticated){
             Admin.createAdmin(req.body)
             .then(function(admin) {
                 res.json(admin);
