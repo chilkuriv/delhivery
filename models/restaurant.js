@@ -10,6 +10,8 @@ var restaurantSchema   = new Schema({
     //address field with type string
     address: {type: Schema.Types.String, required: true },
 
+    admin_id: {type: Schema.Types.String, required: true},
+
     email: {type: Schema.Types.String, required: true },
     //address field with type string
     phome: {type: Schema.Types.String, required: true },
