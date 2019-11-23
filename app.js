@@ -6,6 +6,7 @@ var cors = require('cors')
 var adminController = require("./controllers/adminController")
 var menuController = require("./controllers/menuController")
 var url = 'mongodb://localhost:27017/delhivery';
+var auth_middleware = require('./lib/auth_middleware');
 
 //mongoose connect to database with the url
 mongoose.connect(url, function(err) {
@@ -16,6 +17,7 @@ mongoose.connect(url, function(err) {
     app.use(bodyParser.json());
     app.use(cors())
     app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(auth_middleware());
     //registering the controller to the app
     adminController.controller(app);
     menuController.controller(app);
