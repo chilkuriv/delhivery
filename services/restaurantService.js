@@ -42,6 +42,7 @@ module.exports = {
         restaurant.price = body.price;
         restaurant.rating = body.rating;
         restaurant.loc = body.loc;
+        restaurant.phone = body.phone;
 
 
         restaurant.save()
@@ -96,6 +97,7 @@ module.exports = {
           var deferred = Q.defer();
           restaurantData.findOneAndRemove({_id: id, admin_id: adminId})
             .then(function(restaurant){
+                // add more logic
                 deferred.resolve({message: 'Successfully deleted', object: restaurant})
             })
             .catch(function(err){
