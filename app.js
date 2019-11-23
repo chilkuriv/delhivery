@@ -5,7 +5,7 @@ var app = express();
 var cors = require('cors')
 var adminController = require("./controllers/adminController")
 var menuController = require("./controllers/menuController")
-var url = 'mongodb://localhost:27017/todolist';
+var url = 'mongodb://localhost:27017/delhivery';
 
 //mongoose connect to database with the url
 mongoose.connect(url, function(err) {
