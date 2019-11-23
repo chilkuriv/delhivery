@@ -20,14 +20,19 @@ module.exports.controller = function(app) {
     })
     //post method of the route used to create all admin
     .post(function(req, res) {
-        Admin.createAdmin(req.body)
-        .then(function(admin) {
-            res.json(admin);
-        })
-        .catch(function(err) {
-            console.log(err);
-            res.status(500).json(err);
-        });
+        if(req.authenticated && req.role=="admin"){
+            Admin.createAdmin(req.body)
+            .then(function(admin) {
+                res.json(admin);
+            })
+            .catch(function(err) {
+                console.log(err);
+                res.status(500).json(err);
+            });
+        }
+        else{
+            res.status(401).json({message: 'You are not authorized to access this resource.'});
+        }
     });
 
     app.route('/login/admin')
@@ -77,25 +82,35 @@ module.exports.controller = function(app) {
     })
     //update admin by id
     .put(function(req, res) {
-        Admin.updateAdmin(req.params.id, req.body)
-        .then(function(obj) {
-            res.json(obj);
-        })
-        .catch(function(err) {
-            console.log(err);
-            res.json(err);
-        });
+        if(req.authenticated && req.role=="admin"){
+            Admin.updateAdmin(req.params.id, req.body)
+            .then(function(obj) {
+                res.json(obj);
+            })
+            .catch(function(err) {
+                console.log(err);
+                res.json(err);
+            });
+        }
+        else{
+            res.status(401).json({message: 'You are not authorized to access this resource.'});
+        }
     })
     //delete admin by id
     .delete(function(req, res) {
-        Admin.deleteAdmin(req.params.id)
-        .then(function(obj) {
-            res.json(obj);
-        })
-        .catch(function(err) {
-            console.log(err);
-            res.json(err);
-        });
+        if(req.authenticated && req.role=="admin"){
+            Admin.deleteAdmin(req.params.id)
+            .then(function(obj) {
+                res.json(obj);
+            })
+            .catch(function(err) {
+                console.log(err);
+                res.json(err);
+            });
+        }
+        else{
+            res.status(401).json({message: 'You are not authorized to access this resource.'});
+        }
     });
 
 };
