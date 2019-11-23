@@ -14,7 +14,7 @@ var restaurantSchema   = new Schema({
 
     email: {type: Schema.Types.String, required: true },
     //address field with type string
-    phome: {type: Schema.Types.String, required: true },
+    phone: {type: Schema.Types.String, required: true },
     // coordiantes
     loc: {
         type: { type: String },
