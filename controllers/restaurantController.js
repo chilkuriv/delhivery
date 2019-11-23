@@ -21,7 +21,7 @@ module.exports.controller = function(app) {
     //post method of the route used to create all todolist
     .post(function(req, res) {
         if(req.authenticated && res.role == "admin"){
-            
+            req.body["admin_id"] = req["admin"]["_id"]
             restaurantData.createRestaurant(req.body)
         .then(function(todolist) {
             res.json(todolist);
@@ -60,6 +60,7 @@ module.exports.controller = function(app) {
     //update todolist by id
     .put(function(req, res) {
         if(req.authenticated && res.role == "admin"){
+            req.body["admin_id"] = req["admin"]["_id"]
             restaurantData.updateRestaurant(req.params.id, req.body)
         .then(function(obj) {
             res.json(obj);
@@ -77,7 +78,8 @@ module.exports.controller = function(app) {
     //delete todolist by id
     .delete(function(req, res) {
         if(req.authenticated && res.role == "admin"){
-            restaurantData.deleteRestaurant(req.params.id)
+
+            restaurantData.delete(req.params.id, req["admin"]["_id"])
         .then(function(obj) {
             res.json(obj);
         })

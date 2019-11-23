@@ -36,6 +36,7 @@ module.exports = {
         var deferred = Q.defer();
         var restaurant =  new restaurantData();
         restaurant.name = body.name;
+        restaurant.admin_id = body.admin_id;
         restaurant.email = body.email;
         restaurant.address = body.phone;
         restaurant.price = body.price;
@@ -91,9 +92,9 @@ module.exports = {
         return deferred.promise;
       },
 
-      delete: function(id) {
+      delete: function(id, adminId) {
           var deferred = Q.defer();
-          restaurantData.remove({_id: id})
+          restaurantData.findOneAndRemove({_id: id, admin_id: adminId})
             .then(function(restaurant){
                 deferred.resolve({message: 'Successfully deleted', object: restaurant})
             })
