@@ -1,6 +1,6 @@
 var Q = require('q');
 var OrderService = require('../services/orderService');
-
+console.log(123);
 module.exports.controller = function(app) {
     app.route('/orders')
     .all(function(req, res, next) {
