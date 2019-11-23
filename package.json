@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/chilkuriv/delhivery#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongoose": "^5.7.12",
     "q": "^1.5.1"

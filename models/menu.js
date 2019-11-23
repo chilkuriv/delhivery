@@ -8,7 +8,7 @@ var menuSchema   = new Schema({
     description: {type: Schema.Types.String, required: true , default: ""},
     img: {type: Schema.Types.String, required: true , default: ""},
     category: {type:Schema.Types.String,require:true, default: ""},
-    price:{type: Schema.Types.Float, required:true, default: 0.0},
+    price:{type: Schema.Types.Number, required:true, default: 0.0},
     isavailable:{type: Schema.Types.Boolean, required:true, default:true},
 }, {
 	timestamps: true
