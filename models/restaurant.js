@@ -16,8 +16,7 @@ var restaurantSchema   = new Schema({
     // coordiantes
     loc: {
         type: { type: String },
-        coordinates: [Number],
-        required: true
+        coordinates: [Number]
     },
     price: {type: Schema.Types.String, required:true},
     rating: {type: Schema.Types.Number, required:true}
@@ -27,4 +26,4 @@ var restaurantSchema   = new Schema({
 
 restaurantSchema.index({"loc": "2dsphere"})
 
-module.exports = mongoose.model('customer_data', restaurantSchema);
+module.exports = mongoose.model('restaurant', restaurantSchema);

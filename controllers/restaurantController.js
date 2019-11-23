@@ -1,5 +1,5 @@
 var Q = require('q');
-var restaurantData = require('../services/restaurantServices');
+var restaurantData = require('../services/restaurantService');
 
 module.exports.controller = function(app) {
     //route for /todolist
