@@ -29,6 +29,26 @@ module.exports = {
             });
             return deferred.promise;
     },
+    
+
+    findRestaurantsByName: function(name){
+        var deferred = Q.defer();
+        
+        restaurantData.find(
+            { 
+                name: { 
+                    $regex: ".*"+name+".*",
+                    $options: 'i'
+                } 
+            }
+        ).then(function(restaurantData){
+            deferred.resolve(restaurantData);
+        }).catch(function(err){
+            deferred.reject({message: "Internal Server Error", error: err});
+        })
+
+        return deferred.promise;
+    },
 
     // create restaurant with all data
 
@@ -43,6 +63,8 @@ module.exports = {
         restaurant.rating = body.rating;
         restaurant.loc = body.loc;
         restaurant.phone = body.phone;
+        restaurant.no_rating =body.no_rating;
+        restaurant.type_of_food = body.type_of_food;
 
 
         restaurant.save()
@@ -81,6 +103,12 @@ module.exports = {
                 }
                 if("loc" in body){
                     restaurantData.loc = body.loc;
+                }
+                if("no_rating" in body){
+                    restaurantData.no_rating = body.no_rating;
+                }
+                if("type_of_food" in body){
+                    restaurantData.type_of_food = body.type_of_food;
                 }
                 return restaurantData.save();
             })
