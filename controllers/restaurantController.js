@@ -129,4 +129,26 @@ module.exports.controller = function(app) {
         
     });
 
+
+    app.route('/restaurant/search/:search')
+    .all(function(req, res, next) {
+        next();
+    })
+    //get todolist by id
+    .get(function(req, res) {
+        if(req.authenticated){
+            restaurantData.findRestaurantsByName(req.params.search)
+        .then(function(todolist) {
+            res.json(todolist);
+        })
+        .catch(function(err) {
+            console.log(err, "here maybe");
+            res.status(500).json(err);
+        });
+        }else{
+            res.status(401).json({message: 'You are not authorized to access this resource.'});
+        }
+        
+    });
+
 };

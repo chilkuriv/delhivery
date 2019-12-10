@@ -21,7 +21,9 @@ var restaurantSchema   = new Schema({
         coordinates: [Number]
     },
     price: {type: Schema.Types.String, required:true},
-    rating: {type: Schema.Types.Number, required:true}
+    rating: {type: Schema.Types.Number, required:true},
+    no_rating: {type: Schema.Types.Number, required:true},
+    type_of_food: {type: Schema.Types.String, required:true}
 }, {
 	timestamps: true
 });

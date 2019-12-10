@@ -41,6 +41,26 @@ module.exports = {
             });
             return deferred.promise;
     },
+    
+
+    findRestaurantsByName: function(name){
+        var deferred = Q.defer();
+        
+        restaurantData.find(
+            { 
+                name: { 
+                    $regex: ".*"+name+".*",
+                    $options: 'i'
+                } 
+            }
+        ).then(function(restaurantData){
+            deferred.resolve(restaurantData);
+        }).catch(function(err){
+            deferred.reject({message: "Internal Server Error", error: err});
+        })
+
+        return deferred.promise;
+    },
 
 
     // create restaurant with all data
@@ -54,11 +74,12 @@ module.exports = {
         restaurant.address = body.phone;
         restaurant.price = body.price;
         restaurant.rating = 0;
-        restaurant.totalreviews = 0;
         restaurant.loc = body.loc;
         restaurant.phone = body.phone;
         restaurant.bgimg = body.bgimg;
         restaurant.description = body.description;
+        restaurant.no_rating =0;
+        restaurant.type_of_food = body.type_of_food;
 
 
         restaurant.save()
@@ -107,7 +128,13 @@ module.exports = {
                 if("description" in body){
                     restaurantData.description = body.description;
                 }
-                return restaurantData.save();
+                if("no_rating" in body){
+                    restaurantData.no_rating = body.no_rating;
+                }
+                if("type_of_food" in body){
+                    restaurantData.type_of_food = body.type_of_food;
+                }
+                return restaurantData.save()
             })
             .then(function(todolist) {
                 deferred.resolve(todolist);
