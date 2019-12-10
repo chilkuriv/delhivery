@@ -16,6 +16,18 @@ module.exports = {
         return deferred.promise;
       },
 
+    findAllRestaurantByAdmin: function(id) {
+    var deferred = Q.defer();
+    restaurantData.find({"admin_id":id})
+        .then(function(restaurantData) {
+            deferred.resolve(restaurantData);
+        })
+        .catch(function(err) {
+            deferred.reject({message: "Internal Server Error", error: err});
+        });
+    return deferred.promise;
+    },
+
     // find restaurant by id
 
     findRestaurantById: function(id){
@@ -50,6 +62,7 @@ module.exports = {
         return deferred.promise;
     },
 
+
     // create restaurant with all data
 
     createRestaurant: function(body){
@@ -60,10 +73,12 @@ module.exports = {
         restaurant.email = body.email;
         restaurant.address = body.phone;
         restaurant.price = body.price;
-        restaurant.rating = body.rating;
+        restaurant.rating = 0;
         restaurant.loc = body.loc;
         restaurant.phone = body.phone;
-        restaurant.no_rating =body.no_rating;
+        restaurant.bgimg = body.bgimg;
+        restaurant.description = body.description;
+        restaurant.no_rating =0;
         restaurant.type_of_food = body.type_of_food;
 
 
@@ -104,13 +119,22 @@ module.exports = {
                 if("loc" in body){
                     restaurantData.loc = body.loc;
                 }
+                if("totalreviews" in body){
+                    restaurantData.totalreviews = body.totalreviews;
+                } 
+                if("bgimg" in body){
+                    restaurantData.bgimg = body.bgimg;
+                }
+                if("description" in body){
+                    restaurantData.description = body.description;
+                }
                 if("no_rating" in body){
                     restaurantData.no_rating = body.no_rating;
                 }
                 if("type_of_food" in body){
                     restaurantData.type_of_food = body.type_of_food;
                 }
-                return restaurantData.save();
+                return restaurantData.save()
             })
             .then(function(todolist) {
                 deferred.resolve(todolist);
