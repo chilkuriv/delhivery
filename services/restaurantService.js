@@ -1,6 +1,13 @@
 var Q = require('q');
 var restaurantData = require('../models/restaurant');
-
+var Orders = require('../models/orderHistory');
+function dateFromDay(year, day){
+    var date = new Date(year, 0); // initialize a date in `year-01-01`
+    return new Date(date.setDate(day)); // add the number of days
+}
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
 module.exports = {
     //find all restaurant in the collection
 
@@ -169,11 +176,69 @@ module.exports = {
                     "spherical": true,
                     "maxDistance": 10000
                 }}
-            ],
-            function(err,results) {
+            ])
+            .then(function(restaurant){
+                // add more logic
+                deferred.resolve({message: 'Successfully deleted', object: restaurant})
+            })
+            .catch(function(err){
+                deferred.reject({message: "Internal Server Error", error: err});
+            });
+            return deferred.promise;
+    },
+
+    
+    
+    getOrderByDayAndRestaurant(restaurant_id){
         
+        var deferred = Q.defer();
+        Orders.aggregate([{"$match":{"restaurantId":restaurant_id}},{$group:{_id:{"$dayOfYear":"$createdAt"},orders: { "$sum": 1 }}}])
+          .then(function(menu) {
+            for(let i of menu){
+                var dd = dateFromDay(2019,i["_id"])
+                i["y"] = i["orders"]
+                i["label"] = monthNames[dd.getMonth()]+"-"+dd.getDate()
             }
-        )
+            deferred.resolve(menu);
+          })
+          .catch(function(err) {
+            deferred.reject({message: "Internal Server Error", error: err});
+          });
+        return deferred.promise;
+    },
+
+    geRevenueByDayAndRestaurant(restaurant_id){
+        
+        var deferred = Q.defer();
+        Orders.aggregate([{"$match":{"restaurantId":restaurant_id}},{$group:{_id:{"$dayOfYear":"$createdAt"},revenue: { "$sum": "$totalCost" }}}])
+          .then(function(menu) {
+            for(let i of menu){
+                var dd = dateFromDay(2019,i["_id"])
+                i["y"] = i["revenue"]
+                i["label"] = monthNames[dd.getMonth()]+"-"+dd.getDate()
+            }
+            deferred.resolve(menu);
+          })
+          .catch(function(err) {
+            deferred.reject({message: "Internal Server Error", error: err});
+          });
+        return deferred.promise;
+    },
+
+    getCategoryStatistics(restaurant_id){
+        var deferred = Q.defer();
+        Orders.aggregate([{"$match":{"restaurantId":restaurant_id}},{$unwind:"$items"},{$group: { _id: "$items.category" ,"count":{"$sum":1 }}}])
+          .then(function(menu) {
+              for(let i of menu){
+                  i["name"] = i["_id"][0]
+                  i["y"] = i["count"]
+              }
+            deferred.resolve(menu);
+          })
+          .catch(function(err) {
+            deferred.reject({message: "Internal Server Error", error: err});
+          });
+        return deferred.promise;
     },
     findRestaurantByCredentials: function(email, password){
         var deferred = Q.defer();
@@ -196,7 +261,7 @@ module.exports = {
               });
   
           return deferred.promise;
-      }
-  
+      },
+
 
 };
