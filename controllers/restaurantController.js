@@ -151,4 +151,84 @@ module.exports.controller = function(app) {
         
     });
 
+    app.route('/analytics/restaurant/:id')
+    .all(function(req, res, next) {
+        next();
+    })
+    //get todolist by id
+    .get(function(req, res) {
+        if(req.authenticated){
+            restaurantData.getOrderByDayAndRestaurant(req.params.id)
+        .then(function(todolist) {
+            res.json(todolist);
+        })
+        .catch(function(err) {
+            console.log(err);
+            res.status(500).json(err);
+        });
+        }else{
+            res.status(401).json({message: 'You are not authorized to access this resource.'});
+        }
+        
+    });
+    app.route('/analytics/orders/:id')
+    .all(function(req, res, next) {
+        next();
+    })
+    //get todolist by id
+    .get(function(req, res) {
+        if(req.authenticated){
+            restaurantData.getOrderByDayAndRestaurant(req.params.id)
+        .then(function(todolist) {
+            res.json(todolist);
+        })
+        .catch(function(err) {
+            console.log(err);
+            res.status(500).json(err);
+        });
+        }else{
+            res.status(401).json({message: 'You are not authorized to access this resource.'});
+        }
+        
+    });
+    app.route('/analytics/revenue/:id')
+    .all(function(req, res, next) {
+        next();
+    })
+    //get todolist by id
+    .get(function(req, res) {
+        if(req.authenticated){
+            restaurantData.geRevenueByDayAndRestaurant(req.params.id)
+        .then(function(todolist) {
+            res.json(todolist);
+        })
+        .catch(function(err) {
+            console.log(err);
+            res.status(500).json(err);
+        });
+        }else{
+            res.status(401).json({message: 'You are not authorized to access this resource.'});
+        }
+        
+    });
+    app.route('/analytics/category/:id')
+    .all(function(req, res, next) {
+        next();
+    })
+    //get todolist by id
+    .get(function(req, res) {
+        if(req.authenticated){
+            restaurantData.getCategoryStatistics(req.params.id)
+        .then(function(todolist) {
+            res.json(todolist);
+        })
+        .catch(function(err) {
+            console.log(err);
+            res.status(500).json(err);
+        });
+        }else{
+            res.status(401).json({message: 'You are not authorized to access this resource.'});
+        }
+        
+    });
 };

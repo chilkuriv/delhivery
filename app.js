@@ -7,6 +7,7 @@ var adminController = require("./controllers/adminController")
 var menuController = require("./controllers/menuController")
 var restaurantController = require("./controllers/restaurantController")
 var customerController = require("./controllers/customerController")
+var ordersController = require("./controllers/ordersController")
 var url = 'mongodb://localhost:27017/delhivery';
 var auth_middleware = require('./lib/auth_middleware');
 
@@ -25,6 +26,7 @@ mongoose.connect(url, function(err) {
     menuController.controller(app);
     customerController.controller(app);
     restaurantController.controller(app);
+    ordersController.controller(app);
     //app listening on 3000 port
     app.listen(3000, function () {
       console.log('TodoList App listening on port 3000!')

@@ -51,10 +51,12 @@ module.exports = {
       
       OrderInstance.items=body.items;
       OrderInstance.discount=body.discount;
-      OrderInstance.userId=ObjectId(body.userId);
+      OrderInstance.userId=body.userId;
+      OrderInstance.restaurantId = body.restaurantId;
       OrderInstance.status=body.status;
-      OrderInstance.paymentId=ObjectId(body.paymentId);
+      OrderInstance.paymentId=body.paymentId;
       OrderInstance.description=body.description;
+      OrderInstance.totalCost = body.totalCost;
 
       OrderInstance.save()
           .then(function(obj) {

@@ -20,6 +20,7 @@ var restaurantSchema   = new Schema({
         type: { type: String },
         coordinates: [Number]
     },
+    bgimg: {type: Schema.Types.String, required:true},
     price: {type: Schema.Types.String, required:true},
     rating: {type: Schema.Types.Number, required:true},
     no_rating: {type: Schema.Types.Number, required:true},
