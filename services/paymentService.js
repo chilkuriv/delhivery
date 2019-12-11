@@ -1,4 +1,5 @@
 var Q = require('q');
+var {ObjectId} = require('mongodb');
 var Payments = require('../models/payment');
 
 module.exports = {
@@ -31,9 +32,10 @@ module.exports = {
     },
 
     createPayment: function(body) {
+      console.log(body);
       var deferred = Q.defer();
       var PaymentInstance  = new Payments();
-      
+      console.log(1234567);
       PaymentInstance.type=body.type;
       PaymentInstance.cardNumber=body.cardNumber
       PaymentInstance.validThr=body.validThr

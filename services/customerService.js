@@ -104,7 +104,7 @@ module.exports = {
                   if(admin) {
                       obj = admin.toObject(); // swap for a plain javascript object instance
                       obj.token = jwt.encode({id: obj._id, role: 'customer'});
-                      delete obj["_id"];
+                    //   delete obj["_id"];
                       delete obj["password"];
                       deferred.resolve(obj);
                   } else {
