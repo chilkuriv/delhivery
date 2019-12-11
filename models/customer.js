@@ -20,4 +20,4 @@ var customerSchema   = new Schema({
 	timestamps: true
 });
 
-module.exports = mongoose.model('customer_data', customerSchema);
+module.exports = mongoose.model('customer', customerSchema);

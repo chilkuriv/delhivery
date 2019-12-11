@@ -27,6 +27,20 @@ module.exports.controller = function(app) {
         });
     });
 
+    app.route('/orders/:id/:filter')
+    .all(function(req, res, next) {
+        next();
+    })
+    .get(function(req, res) {
+        OrderService.findOrdersByRestaurant(req.params.id,req.params.filter)
+        .then(function(orders) {
+            res.json(orders);
+        })
+        .catch(function(err) {
+            console.log(err);
+            res.status(500).json(err);
+        });
+    });
     app.route('/order/:id')
     .all(function(req, res, next) {
         next();

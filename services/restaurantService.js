@@ -16,6 +16,18 @@ module.exports = {
         return deferred.promise;
       },
 
+    findAllRestaurantByAdmin: function(id) {
+    var deferred = Q.defer();
+    restaurantData.find({"admin_id":id})
+        .then(function(restaurantData) {
+            deferred.resolve(restaurantData);
+        })
+        .catch(function(err) {
+            deferred.reject({message: "Internal Server Error", error: err});
+        });
+    return deferred.promise;
+    },
+
     // find restaurant by id
 
     findRestaurantById: function(id){
@@ -29,6 +41,27 @@ module.exports = {
             });
             return deferred.promise;
     },
+    
+
+    findRestaurantsByName: function(name){
+        var deferred = Q.defer();
+        
+        restaurantData.find(
+            { 
+                name: { 
+                    $regex: ".*"+name+".*",
+                    $options: 'i'
+                } 
+            }
+        ).then(function(restaurantData){
+            deferred.resolve(restaurantData);
+        }).catch(function(err){
+            deferred.reject({message: "Internal Server Error", error: err});
+        })
+
+        return deferred.promise;
+    },
+
 
     // create restaurant with all data
 
@@ -36,11 +69,17 @@ module.exports = {
         var deferred = Q.defer();
         var restaurant =  new restaurantData();
         restaurant.name = body.name;
+        restaurant.admin_id = body.admin_id;
         restaurant.email = body.email;
         restaurant.address = body.phone;
         restaurant.price = body.price;
-        restaurant.rating = body.rating;
+        restaurant.rating = 0;
         restaurant.loc = body.loc;
+        restaurant.phone = body.phone;
+        restaurant.bgimg = body.bgimg;
+        restaurant.description = body.description;
+        restaurant.no_rating =0;
+        restaurant.type_of_food = body.type_of_food;
 
 
         restaurant.save()
@@ -80,7 +119,22 @@ module.exports = {
                 if("loc" in body){
                     restaurantData.loc = body.loc;
                 }
-                return restaurantData.save();
+                if("totalreviews" in body){
+                    restaurantData.totalreviews = body.totalreviews;
+                } 
+                if("bgimg" in body){
+                    restaurantData.bgimg = body.bgimg;
+                }
+                if("description" in body){
+                    restaurantData.description = body.description;
+                }
+                if("no_rating" in body){
+                    restaurantData.no_rating = body.no_rating;
+                }
+                if("type_of_food" in body){
+                    restaurantData.type_of_food = body.type_of_food;
+                }
+                return restaurantData.save()
             })
             .then(function(todolist) {
                 deferred.resolve(todolist);
@@ -91,10 +145,11 @@ module.exports = {
         return deferred.promise;
       },
 
-      delete: function(id) {
+      delete: function(id, adminId) {
           var deferred = Q.defer();
-          restaurantData.remove({_id: id})
+          restaurantData.findOneAndRemove({_id: id, admin_id: adminId})
             .then(function(restaurant){
+                // add more logic
                 deferred.resolve({message: 'Successfully deleted', object: restaurant})
             })
             .catch(function(err){
@@ -120,6 +175,28 @@ module.exports = {
             }
         )
     },
+    findRestaurantByCredentials: function(email, password){
+        var deferred = Q.defer();
+  
+        restaurantData.findOne({email: email, password: password})
+              .then(function(admin) {
+                  if(admin) {
+                      obj = admin.toObject(); // swap for a plain javascript object instance
+                      obj.token = jwt.encode({id: obj._id, role: 'restaurant'});
+                      delete obj["_id"];
+                      delete obj["password"];
+                      deferred.resolve(obj);
+                  } else {
+                      deferred.reject({message: "Wrong email or password"});
+                  }
+              })
+              .catch(function(err) {
+                  console.log(err.toString());
+                  deferred.reject({message: "Internal Server Error", error: err.toString()});
+              });
+  
+          return deferred.promise;
+      }
   
 
 };

@@ -10,21 +10,24 @@ var restaurantSchema   = new Schema({
     //address field with type string
     address: {type: Schema.Types.String, required: true },
 
+    admin_id: {type: Schema.Types.String, required: true},
+
     email: {type: Schema.Types.String, required: true },
     //address field with type string
-    phome: {type: Schema.Types.String, required: true },
+    phone: {type: Schema.Types.String, required: true },
     // coordiantes
     loc: {
         type: { type: String },
-        coordinates: [Number],
-        required: true
+        coordinates: [Number]
     },
     price: {type: Schema.Types.String, required:true},
-    rating: {type: Schema.Types.Number, required:true}
+    rating: {type: Schema.Types.Number, required:true},
+    no_rating: {type: Schema.Types.Number, required:true},
+    type_of_food: {type: Schema.Types.String, required:true}
 }, {
 	timestamps: true
 });
 
 restaurantSchema.index({"loc": "2dsphere"})
 
-module.exports = mongoose.model('customer_data', restaurantSchema);
+module.exports = mongoose.model('restaurant', restaurantSchema);
