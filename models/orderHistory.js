@@ -4,6 +4,7 @@ var mongoose     = require('mongoose');
 mongoose.Promise = require('q').Promise;
 var Schema       = mongoose.Schema;
 
+// orders ORM Model
 var orderSchema   = new Schema({
     // items array contains list of menu objects with quantity and price
     items: {type: Schema.Types.Mixed},

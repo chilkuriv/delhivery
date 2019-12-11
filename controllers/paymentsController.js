@@ -1,6 +1,6 @@
 var Q = require('q');
 var PaymentService = require('../services/paymentService');
-
+// supports simple crud on orders collection
 module.exports.controller = function(app) {
     //payments get post 
     app.route('/payments')

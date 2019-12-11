@@ -1,6 +1,7 @@
 var Q = require('q');
 var OrderService = require('../services/orderService');
-
+// supports simple crud on orders collection
+// Additional operations like orders filtering using restaurantid and user id etc
 module.exports.controller = function(app) {
     app.route('/orders')
     .all(function(req, res, next) {

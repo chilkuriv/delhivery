@@ -3,7 +3,7 @@ var Q 			 = require('q'); // https://www.npmjs.com/package/q
 var mongoose     = require('mongoose');
 mongoose.Promise = require('q').Promise;
 var Schema       = mongoose.Schema;
-
+// schema for payment info
 var paymentSchema   = new Schema({
     type: {type: Schema.Types.String },
     cardNumber: {type: Schema.Types.String },
