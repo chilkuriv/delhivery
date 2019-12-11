@@ -9,7 +9,7 @@ var paymentSchema   = new Schema({
     cardNumber: {type: Schema.Types.String },
     validThr:{type: Schema.Types.String },
     cvv:{type: Schema.Types.Number},
-    userId:{type: Schema.Types.ObjectId },
+    userId:{type: Schema.Types.String },
     isDefault:{type: Schema.Types.Boolean}
 
 }, {
