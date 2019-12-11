@@ -36,7 +36,7 @@ module.exports.controller = function(app) {
     });
     // route for login/customer
 
-    app.route('/login/admin')
+    app.route('/login/customer/')
     .all(function(req, res, next) {
         next();
     })
