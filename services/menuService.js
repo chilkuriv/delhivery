@@ -30,7 +30,7 @@ module.exports = {
 
     findMenuByRestaurantId: function(id) {
         var deferred = Q.defer();
-        Menu.aggregate([{$group:{_id:"$category",menu: { "$push": "$$ROOT" }}}])
+        Menu.aggregate([{$group:{_id:"$category",menu: { "$push": "$$ROOT" }}},{$sort:{_id:1}}])
           .then(function(menu) {
             deferred.resolve(menu);
           })
