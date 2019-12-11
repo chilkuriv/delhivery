@@ -6,7 +6,7 @@ var Schema       = mongoose.Schema;
 
 var orderSchema   = new Schema({
 
-    items: {type: Schema.Types.Array},
+    items: {type: Schema.Types.Mixed},
     discount: {type: Schema.Types.Number },
     userId:{type: Schema.Types.String, required: true },
     restaurantId:{type: Schema.Types.String, required: true },
