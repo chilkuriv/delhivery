@@ -20,8 +20,8 @@ module.exports.controller = function(app) {
     })
     //post method of the route used to create all todolist
     .post(function(req, res) {
-        if(req.authenticated && req.role == "admin"){
-            req.body["admin_id"] = req["admin"]["_id"]
+        if(req.authenticated){
+            req.body["admin_id"] = "sxaxcsac"
             restaurantData.createRestaurant(req.body)
         .then(function(todolist) {
             res.json(todolist);
@@ -36,6 +36,28 @@ module.exports.controller = function(app) {
         
     });
 
+    app.route('/login/restaurant/')
+    .all(function(req, res, next) {
+        next();
+    })
+    //get customer by email and pass
+    .post(function(req, res) {
+        if(req.authenticated){
+            var email = req.body['email'];
+            var password = req.body['password'];
+            restaurantData.findRestaurantByCredentials(email,password)
+            .then(function(admin) {
+                res.json(admin);
+             })
+            .catch(function(err) {
+                console.log(err);
+                res.status(500).json(err);
+            });
+        }else{
+            res.status(401).json({message: 'You are not authorized to access this resource.'});
+        }
+    });
+  
     app.route('/restaurant/admin')
     .all(function(req, res, next) {
         next();

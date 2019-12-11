@@ -239,6 +239,29 @@ module.exports = {
             deferred.reject({message: "Internal Server Error", error: err});
           });
         return deferred.promise;
-    }
+    },
+    findRestaurantByCredentials: function(email, password){
+        var deferred = Q.defer();
+  
+        restaurantData.findOne({email: email, password: password})
+              .then(function(admin) {
+                  if(admin) {
+                      obj = admin.toObject(); // swap for a plain javascript object instance
+                      obj.token = jwt.encode({id: obj._id, role: 'restaurant'});
+                      delete obj["_id"];
+                      delete obj["password"];
+                      deferred.resolve(obj);
+                  } else {
+                      deferred.reject({message: "Wrong email or password"});
+                  }
+              })
+              .catch(function(err) {
+                  console.log(err.toString());
+                  deferred.reject({message: "Internal Server Error", error: err.toString()});
+              });
+  
+          return deferred.promise;
+      },
+
 
 };
