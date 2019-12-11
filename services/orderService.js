@@ -2,7 +2,7 @@ var Q = require('q');
 var Orders = require('../models/orderHistory');
 console.log(456);
 module.exports = {
-
+    // find all orders
     findOrders: function() {
       var deferred = Q.defer();
       Orders.find()
@@ -16,7 +16,7 @@ module.exports = {
           });
       return deferred.promise;
     },
-
+    // find order for a user
     findOrdersByUserId: function(id) {
       console.log(12343215);
         var deferred = Q.defer();
@@ -31,6 +31,7 @@ module.exports = {
             });
         return deferred.promise;
       },
+    //   find orders by restaurantId
       findOrdersByRestaurant: function(id,filter) {
         var deferred = Q.defer();
         Orders.find({"restaurantId":id,"status":filter})

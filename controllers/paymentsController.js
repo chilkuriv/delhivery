@@ -2,6 +2,7 @@ var Q = require('q');
 var PaymentService = require('../services/paymentService');
 
 module.exports.controller = function(app) {
+    //payments get post 
     app.route('/payments')
     .all(function(req, res, next) {
         next();
@@ -27,6 +28,7 @@ module.exports.controller = function(app) {
         });
     });
 
+    //get payments by id route 
     app.route('/payment/:id')
     .all(function(req, res, next) {
         next();

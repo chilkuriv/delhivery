@@ -49,7 +49,7 @@ module.exports = {
             return deferred.promise;
     },
     
-
+    // find restaurant by name
     findRestaurantsByName: function(name){
         var deferred = Q.defer();
         
@@ -188,7 +188,7 @@ module.exports = {
     },
 
     
-    
+    // get orders by date analytics function
     getOrderByDayAndRestaurant(restaurant_id){
         
         var deferred = Q.defer();
@@ -207,6 +207,7 @@ module.exports = {
         return deferred.promise;
     },
 
+    // get revenue by day analytics function
     geRevenueByDayAndRestaurant(restaurant_id){
         
         var deferred = Q.defer();
@@ -225,6 +226,7 @@ module.exports = {
         return deferred.promise;
     },
 
+    // get all category statistics function
     getCategoryStatistics(restaurant_id){
         var deferred = Q.defer();
         Orders.aggregate([{"$match":{"restaurantId":restaurant_id}},{$unwind:"$items"},{$group: { _id: "$items.category" ,"count":{"$sum":1 }}}])

@@ -53,7 +53,7 @@ module.exports = {
 
             return deferred.promise;
     },
-
+    // update customer data
     updateCustomer: function(id, body) {
         var deferred = Q.defer();
         customerData.findById(id)
@@ -83,7 +83,7 @@ module.exports = {
             });
         return deferred.promise;
       },
-
+    //   delete customer
       delete: function(id) {
           var deferred = Q.defer();
           customerData.remove({_id: id})
@@ -95,7 +95,7 @@ module.exports = {
             });
             return deferred.promise;
       },
-
+    //   login api
       findCustomerByCredentials: function(email, password){
         var deferred = Q.defer();
   

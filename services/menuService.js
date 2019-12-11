@@ -27,7 +27,7 @@ module.exports = {
         });
       return deferred.promise;
     },
-
+    // find menu by restaurant id
     findMenuByRestaurantId: function(id) {
         var deferred = Q.defer();
         Menu.aggregate([{$match:{"restaurant_id":id}},{$group:{_id:"$category",menu: { "$push": "$$ROOT" }}},{$sort:{_id:1}}])
