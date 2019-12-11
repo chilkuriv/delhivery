@@ -5,15 +5,15 @@ mongoose.Promise = require('q').Promise;
 var Schema       = mongoose.Schema;
 
 var orderSchema   = new Schema({
-    items: {type: Schema.Types.DocumentArray},
-    discount: {type: Schema.Types.Integer },
-    userId:{type: Schema.Types.ObjectId, required: true },
-    status:{type: Schema.Types.String, required: true },
-    paymentId:{type: Schema.Types.ObjectId,required:false},
-    DeliveredBy:{type: Schema.Types.ObjectId,default:null},
-    description:{type: Schema.Types.String,default:null}
+    items: {type: Schema.Types.String},
+    discount: {type: Schema.Types.Number },
+    userId:{type: Schema.Types.ObjectId },
+    status:{type: Schema.Types.String},
+    paymentId:{type: Schema.Types.ObjectId},
+    DeliveredBy:{type: Schema.Types.ObjectId},
+    description:{type: Schema.Types.String}
 }, {
 	timestamps: true
 });
 
-module.exports = mongoose.model('order', orderSchema);
+module.exports = mongoose.model('orderhistory', orderSchema);

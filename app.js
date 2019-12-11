@@ -5,6 +5,9 @@ var app = express();
 var cors = require('cors')
 var adminController = require("./controllers/adminController")
 var menuController = require("./controllers/menuController")
+var paymentController = require("./controllers/paymentsController")
+var orderController = require("./controllers/ordersController")
+
 var restaurantController = require("./controllers/restaurantController")
 var customerController = require("./controllers/customerController")
 var url = 'mongodb://localhost:27017/delhivery';
@@ -23,8 +26,13 @@ mongoose.connect(url, function(err) {
     //registering the controller to the app
     adminController.controller(app);
     menuController.controller(app);
+
+    paymentController.controller(app);
+    orderController.controller(app);
+
     customerController.controller(app);
     restaurantController.controller(app);
+
     //app listening on 3000 port
     app.listen(3000, function () {
       console.log('TodoList App listening on port 3000!')
