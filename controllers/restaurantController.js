@@ -21,7 +21,7 @@ module.exports.controller = function(app) {
     //post method of the route used to create all todolist
     .post(function(req, res) {
         if(req.authenticated){
-            req.body["admin_id"] = "sxaxcsac"
+            req.body["admin_id"] = req['admin']['_id'];
             restaurantData.createRestaurant(req.body)
         .then(function(todolist) {
             res.json(todolist);

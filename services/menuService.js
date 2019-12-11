@@ -30,11 +30,11 @@ module.exports = {
 
     findMenuByRestaurantId: function(id) {
         var deferred = Q.defer();
-        Menu.aggregate([{$group:{_id:"$category",menu: { "$push": "$$ROOT" }}},{$sort:{_id:1}}])
+        Menu.aggregate([{$match:{"restaurant_id":id}},{$group:{_id:"$category",menu: { "$push": "$$ROOT" }}},{$sort:{_id:1}}])
           .then(function(menu) {
             deferred.resolve(menu);
           })
-          .catch(function(err) {
+          .catch(function(err) {      
             deferred.reject({message: "Internal Server Error", error: err});
           });
         return deferred.promise;
