@@ -1,6 +1,6 @@
 var Q = require('q');
 var OrderService = require('../services/orderService');
-console.log(123);
+
 module.exports.controller = function(app) {
     app.route('/orders')
     .all(function(req, res, next) {
@@ -32,6 +32,7 @@ module.exports.controller = function(app) {
         next();
     })
     .get(function(req, res) {
+        
         OrderService.findOrdersByRestaurant(req.params.id,req.params.filter)
         .then(function(orders) {
             res.json(orders);
@@ -41,7 +42,7 @@ module.exports.controller = function(app) {
             res.status(500).json(err);
         });
     });
-    app.route('/order/:id')
+    app.route('/orders/:id')
     .all(function(req, res, next) {
         next();
     })
@@ -75,5 +76,22 @@ module.exports.controller = function(app) {
             res.json(err);
         });
     });
+    app.route('/userorders/:id')
+    .all(function(req, res, next) {
+        console.log("9999");
+        next();
+    })
+    .get(function(req, res) {
+        console.log(1234345);
+        OrderService.findOrdersByUserId(req.params.id)
+        .then(function(orders) {
+            res.json(orders);
+        })
+        .catch(function(err) {
+            console.log(err);
+            res.status(500).json(err);
+        });
+    });
+    
 
 };

@@ -82,6 +82,7 @@ module.exports.controller = function(app) {
     })
     //update admin by id
     .put(function(req, res) {
+        console.log(req.role);
         if(req.authenticated && req.role=="admin"){
             Admin.updateAdmin(req.params.id, req.body)
             .then(function(obj) {
