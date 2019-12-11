@@ -62,7 +62,7 @@ module.exports = {
     createOrder: function(body) {
       var deferred = Q.defer();
       var OrderInstance  = new Orders();
-      
+      console.log(body);
       OrderInstance.items=body.items;
       OrderInstance.discount=body.discount;
       OrderInstance.userId=body.userId;
@@ -92,13 +92,8 @@ module.exports = {
       Orders.findById(id)
           .then(function(orderInstance) {
               console.log(orderInstance);
-              OrderInstance.items=body.items;
-                OrderInstance.discount=body.discount;
-                OrderInstance.userId=ObjectId(body.userId);
-                OrderInstance.status=body.status;
-                OrderInstance.paymentId=ObjectId(body.paymentId);
-                OrderInstance.description=body.description;
-                return OrderInstance.save();
+              orderInstance.status = body.status;
+                return orderInstance.save();
           })
           .then(function() {
               deferred.resolve(OrderInstance);
