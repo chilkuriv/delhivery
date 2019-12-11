@@ -17,6 +17,21 @@ module.exports = {
       return deferred.promise;
     },
 
+    findOrdersByRestaurant: function(id,filter) {
+        var deferred = Q.defer();
+        Orders.find({"restaurant":id,"status":filter})
+            .then(function(orders) {
+                console.log(orders);
+                deferred.resolve(orders);
+            })
+            .catch(function(err) {
+                console.log("Error:",err);
+                deferred.reject({message: "Internal Server Error", error: err});
+            });
+        return deferred.promise;
+      },
+
+      
     findOrderById: function(id) {
       var deferred = Q.defer();
       
